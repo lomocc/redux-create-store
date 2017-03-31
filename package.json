@@ -1,0 +1,16 @@
+{
+  "name": "redux-create-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "vincent",
+  "license": "ISC",
+  "dependencies": {
+    "object-assign": "*",
+    "react": "*",
+    "react-dom": "*",
+    "redux": "*",
+    "redux-thunk": "*"
+  }
+}
