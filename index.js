@@ -16,7 +16,7 @@
  *  });
  *
  */
-var {createStore, applyMiddleware, combineReducers, bindActionCreators} = require('redux');
+var redux = require('redux');
 var thunk = require('redux-thunk').default;
 var assign = require('object-assign');
 
@@ -28,10 +28,10 @@ module.exports = function(reducer, preloadedState, enhancer, ...middlewares){
     if(typeof reducer == 'function'){
         return assign(...arguments);
     }else{
-        let store = applyMiddleware(thunk, ...middlewares)(createStore)(combineReducers(reducer), preloadedState, enhancer);
+        let store = redux.applyMiddleware(thunk, ...middlewares)(redux.createStore)(redux.combineReducers(reducer), preloadedState, enhancer);
         for (var key in reducer) {
             if(reducer.hasOwnProperty(key)) {
-                assign(reducer[key], bindActionCreators(assign({}, reducer[key]), store.dispatch));
+                assign(reducer[key], redux.bindActionCreators(assign({}, reducer[key]), store.dispatch));
             }
         }
         assign(reducer, {dispatch:store.dispatch});
