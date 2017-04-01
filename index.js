@@ -24,11 +24,12 @@ var assign = require('object-assign');
 // import thunk from 'redux-thunk';
 // import assign from 'object-assign';
 
-module.exports = function(reducer, preloadedState, enhancer, ...middlewares){
+module.exports = function(reducer, preloadedState, enhancer){
     if(typeof reducer == 'function'){
-        return assign(...arguments);
+        return assign.apply(null, arguments);
     }else{
-        let store = redux.applyMiddleware(thunk, ...middlewares)(redux.createStore)(redux.combineReducers(reducer), preloadedState, enhancer);
+        var middlewares = Array.prototype.slice.call(arguments, 3);
+        var store = redux.applyMiddleware.apply(null, [thunk].concat(middlewares))(redux.createStore)(redux.combineReducers(reducer), preloadedState, enhancer);
         for (var key in reducer) {
             if(reducer.hasOwnProperty(key)) {
                 assign(reducer[key], redux.bindActionCreators(assign({}, reducer[key]), store.dispatch));
